@@ -1,0 +1,44 @@
+name: Weekly Paper Scrape
+
+on:
+  schedule:
+    # 每周一早上 8 点运行
+    - cron: '0 0 * * 1'
+  workflow_dispatch:  # 手动触发
+
+jobs:
+  scrape-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install requests beautifulsoup4 lxml
+          
+      - name: Run scraper
+        run: python scrape_elsevier.py 200
+        env:
+          SCIENCEDIRECT_API_KEY: ${{ secrets.SCIENCEDIRECT_API_KEY }}
+          SCIENCEDIRECT_COOKIE: ${{ secrets.SCIENCEDIRECT_COOKIE }}
+          
+      - name: Check for changes
+        id: git-check
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git diff --staged --quiet || echo "changes=true" >> $GITHUB_OUTPUT
+          
+      - name: Commit and push
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git commit -m "Auto update papers - $(date +'%Y-%m-%d')"
+          git push
