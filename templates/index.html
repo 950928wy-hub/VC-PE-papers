@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VC/PE 论文推送站 — 风险投资与私募股权</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a5c;
+            --primary-light: #2a5a8c;
+            --accent: #e85d04;
+            --accent-light: #f48c06;
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --text: #1a1a2e;
+            --text-secondary: #6c757d;
+            --border: #e9ecef;
+            --tag-vc: #e3f2fd;
+            --tag-vc-text: #1565c0;
+            --tag-pe: #fff3e0;
+            --tag-pe-text: #e65100;
+            --tag-lp: #e8f5e9;
+            --tag-lp-text: #2e7d32;
+            --tag-gp: #f3e5f5;
+            --tag-gp-text: #7b1fa2;
+            --tag-exit: #fce4ec;
+            --tag-exit-text: #c2185b;
+            --tag-startup: #e0f7fa;
+            --tag-startup-text: #00838f;
+            --tag-other: #f5f5f5;
+            --tag-other-text: #616161;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2.5rem 0 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .header-sub {
+            font-size: 1rem;
+            opacity: 0.85;
+            font-weight: 400;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-stat {
+            text-align: left;
+        }
+
+        .header-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .header-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+
+        .stats-bar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-item strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .sidebar-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border);
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Search */
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.8rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: var(--bg);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 58, 92, 0.1);
+            background: var(--surface);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--text-secondary);
+        }
+
+        /* Filter */
+        .filter-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .filter-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            background: var(--bg);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236c757d' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.8rem center;
+            padding-right: 2rem;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Year pills */
+        .year-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .year-pill {
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .year-pill:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .year-pill.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Tag Cloud */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .tag-cloud .tag {
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tag-cloud .tag:hover {
+            opacity: 0.8;
+            transform: translateY(-1px);
+        }
+
+        /* Paper List */
+        .paper-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .paper-count {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .paper-count strong {
+            color: var(--primary);
+        }
+
+        .sort-select {
+            padding: 0.5rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            background: var(--surface);
+            cursor: pointer;
+        }
+
+        /* Paper Card */
+        .paper-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        .paper-card:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .paper-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+
+        .paper-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            line-height: 1.4;
+            flex: 1;
+            margin-right: 1rem;
+            cursor: pointer;
+        }
+
+        .paper-title:hover {
+            color: var(--accent);
+        }
+
+        .paper-oa-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .paper-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .paper-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .paper-meta-item svg {
+            width: 14px;
+            height: 14px;
+            opacity: 0.7;
+        }
+
+        .paper-authors {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .paper-abstract {
+            font-size: 0.85rem;
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .paper-abstract-zh {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #fff8f0;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+            font-style: italic;
+        }
+
+        .paper-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .paper-keyword {
+            padding: 0.2rem 0.5rem;
+            background: var(--bg);
+            color: var(--text-secondary);
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+
+        /* Auto Tags */
+        .paper-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .paper-tags .tag {
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+
+        .paper-actions {
+            display: flex;
+            gap: 0.6rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background: var(--accent-light);
+        }
+
+        .btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+        }
+
+        .page-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .page-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .page-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.4;
+        }
+
+        .empty-state h3 {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Translate Button */
+        .translate-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .translate-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--surface);
+            border-radius: 16px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--surface);
+            z-index: 1;
+        }
+
+        .modal-header h2 {
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: var(--bg);
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        .modal-close:hover {
+            background: var(--border);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header-stats {
+                gap: 1rem;
+            }
+        }
+
+        /* Journal List */
+        .journal-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .journal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem 0;
+            font-size: 0.8rem;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .journal-item:last-child {
+            border-bottom: none;
+        }
+
+        .journal-item:hover {
+            color: var(--primary);
+        }
+
+        .journal-item .count {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            background: var(--bg);
+            padding: 0.1rem 0.4rem;
+            border-radius: 10px;
+        }
+
+        /* Highlight bar */
+        .highlight-bar {
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="highlight-bar"></div>
+
+    <header class="header">
+        <div class="header-inner">
+            <span class="header-badge">数据来源: Elsevier ScienceDirect</span>
+            <h1>VC/PE 论文推送站</h1>
+            <p class="header-sub">风险投资与私募股权领域 · 学术论文智能聚合</p>
+            <div class="header-stats">
+                <div class="header-stat">
+                    <span class="header-stat-value" id="total-count">--</span>
+                    <span class="header-stat-label">收录论文</span>
+                </div>
+                <div class="header-stat">
+                    <span class="header-stat-value" id="journal-count">--</span>
+                    <span class="header-stat-label">来源期刊</span>
+                </div>
+                <div class="header-stat">
+                    <span class="header-stat-value" id="oa-count">--</span>
+                    <span class="header-stat-label">开放获取</span>
+                </div>
+                <div class="header-stat">
+                    <span class="header-stat-value" id="update-time">--</span>
+                    <span class="header-stat-label">数据更新</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-bar-inner">
+            <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                <span>最新收录涵盖 <strong>2020-2026</strong></span>
+            </div>
+            <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                <span>覆盖 <strong>Journal of Corporate Finance</strong> 等核心期刊</span>
+            </div>
+            <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                <span>AI 翻译摘要 + 自动标签分类</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="sidebar-card">
+                <div class="sidebar-title">搜索</div>
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                    </svg>
+                    <input type="text" class="search-input" id="search-input" placeholder="搜索标题、作者、摘要...">
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <div class="sidebar-title">筛选</div>
+
+                <div class="filter-group">
+                    <label class="filter-label">年份</label>
+                    <div class="year-pills" id="year-filters">
+                        <span class="year-pill active" data-year="">全部</span>
+                        <span class="year-pill" data-year="2026">2026</span>
+                        <span class="year-pill" data-year="2025">2025</span>
+                        <span class="year-pill" data-year="2024">2024</span>
+                        <span class="year-pill" data-year="2023">2023</span>
+                        <span class="year-pill" data-year="2022">2022</span>
+                        <span class="year-pill" data-year="2021">2021</span>
+                        <span class="year-pill" data-year="2020">2020</span>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">来源期刊</label>
+                    <select class="filter-select" id="journal-filter">
+                        <option value="">全部期刊</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; cursor: pointer;">
+                        <input type="checkbox" id="oa-filter" style="width: 16px; height: 16px; accent-color: var(--primary);">
+                        仅显示开放获取论文
+                    </label>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <div class="sidebar-title">自动标签</div>
+                <div class="tag-cloud" id="tag-cloud">
+                    <span class="tag" style="background: var(--tag-vc); color: var(--tag-vc-text);">风险投资</span>
+                    <span class="tag" style="background: var(--tag-pe); color: var(--tag-pe-text);">私募股权</span>
+                    <span class="tag" style="background: var(--tag-lp); color: var(--tag-lp-text);">LP</span>
+                    <span class="tag" style="background: var(--tag-gp); color: var(--tag-gp-text);">GP</span>
+                    <span class="tag" style="background: var(--tag-exit); color: var(--tag-exit-text);">退出策略</span>
+                    <span class="tag" style="background: var(--tag-startup); color: var(--tag-startup-text);">创业</span>
+                    <span class="tag" style="background: var(--tag-other); color: var(--tag-other-text);">杠杆收购</span>
+                    <span class="tag" style="background: var(--tag-other); color: var(--tag-other-text);">天使投资</span>
+                    <span class="tag" style="background: var(--tag-other); color: var(--tag-other-text);">公司治理</span>
+                    <span class="tag" style="background: var(--tag-other); color: var(--tag-other-text);">业绩回报</span>
+                    <span class="tag" style="background: var(--tag-other); color: var(--tag-other-text);">中国</span>
+                    <span class="tag" style="background: var(--tag-other); color: var(--tag-other-text);">美国</span>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <div class="sidebar-title">排序</div>
+                <select class="filter-select" id="sort-select">
+                    <option value="newest">最新优先</option>
+                    <option value="oldest">最早优先</option>
+                </select>
+            </div>
+        </aside>
+
+        <main class="paper-list">
+            <div class="paper-list-header">
+                <div class="paper-count">共 <strong id="paper-total">--</strong> 篇论文</div>
+            </div>
+
+            <div id="paper-list-container">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>正在加载论文...</p>
+                </div>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>VC/PE 论文推送站 · 数据来源：Elsevier ScienceDirect · 仅供学术研究使用</p>
+        <p style="margin-top: 0.5rem; opacity: 0.7;">Elsevier © 版权归属其各自所有者 · 全文访问权限请参阅 ScienceDirect</p>
+    </footer>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
