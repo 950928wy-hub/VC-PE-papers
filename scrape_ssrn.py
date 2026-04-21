@@ -24,24 +24,22 @@ os.makedirs(DATA_DIR, exist_ok=True)
 
 OUTPUT_FILE = os.path.join(DATA_DIR, "ssrn_papers.json")
 
-# SSRN 相关领域关键词（用于筛选相关工作论文）
-SSRN_KEYWORDS = {
-    "finance": [
-        "venture capital", "private equity", "ipo", "initial public offering",
-        "merger", "acquisition", "financing", "investment", "asset pricing",
-        "corporate finance", "banking", "financial intermediation"
-    ],
-    "strategy": [
-        "strategy", "strategic management", "competitive advantage",
-        "innovation", "entrepreneurship", "startup", "technology"
-    ],
-    "accounting": [
-        "accounting", "earnings", "financial reporting", "audit"
-    ],
-    "economics": [
-        "economics", "economic growth", "development", "regulation", "antitrust"
-    ]
-}
+# VC/PE 主题关键词
+SSRN_KEYWORDS = [
+    "venture capital", "private equity", "vc fund", "pe fund",
+    "entrepreneurial finance", "startup finance", "angel investment",
+    "corporate venture capital", "cvc", "government guidance fund",
+    "buyout", "lbo", "leveraged buyout", "growth equity",
+    "exit strategy", "ipo", "fund performance", "irr",
+    "limited partner", "lp", "general partner", "gp",
+    "portfolio company", "deal sourcing", "due diligence",
+    "investment screening", "m&a", "merger acquisition",
+    "entrepreneurship", "entrepreneurial", "startup",
+    "innovation", "technology", "fund of funds",
+    "dry powder", "capital commitment", "co-investment",
+    "syndicate", "deal flow", "transaction",
+    "vc", "pe", "cvc",
+]
 
 HEADERS = {
     "User-Agent": "Academic-Paper-Feed/1.0 (mailto:yanyan@example.com)",
@@ -106,14 +104,11 @@ def clean_html(text):
 
 
 def is_relevant_paper(title, abstract, keywords):
-    """判断论文是否与目标领域相关"""
+    """判断论文是否与 VC/PE 主题相关"""
     text = f"{title} {abstract} {' '.join(keywords)}".lower()
-    
-    # 检查是否匹配任意关键词类别
-    for category, kws in SSRN_KEYWORDS.items():
-        if any(kw.lower() in text for kw in kws):
-            return True, category
-    return False, None
+
+    match_count = sum(1 for kw in SSRN_KEYWORDS if kw.lower() in text)
+    return match_count >= 1
 
 
 # ==================== SSRN API ====================
@@ -324,10 +319,9 @@ def scrape_ssrn(days_back=30, max_papers=500):
         )
         
         if is_relevant:
-            article["relevance_category"] = category
             existing[key] = article
             new_count += 1
-            print(f"    ✅ [{category}] {article['title'][:50]}")
+            print(f"    ✅ {article['title'][:50]}")
         else:
             skip_count += 1
     

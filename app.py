@@ -27,13 +27,13 @@ CORS(app)
 
 # 期刊分类配置
 JOURNAL_CATEGORIES = {
-    "Finance": ["Journal of Finance", "Journal of Financial and Quantitative Analysis", 
-                "Journal of Financial Economics", "Review of Financial Studies", 
+    "Finance": ["Journal of Finance", "Journal of Financial and Quantitative Analysis",
+                "Journal of Financial Economics", "Review of Financial Studies",
                 "Review of Finance", "Journal of Banking and Finance", "Journal of Corporate Finance"],
-    "Economic": ["Journal of Economic Literature", "Journal of Economic Perspectives", 
+    "Economic": ["Journal of Economic Literature", "Journal of Economic Perspectives",
                  "Journal of Economics and Management Strategy"],
-    "Accounting": ["Accounting Review", "Contemporary Accounting Research", 
-                   "Journal of Accounting and Economics", "Journal of Accounting Research", 
+    "Accounting": ["Accounting Review", "Contemporary Accounting Research",
+                   "Journal of Accounting and Economics", "Journal of Accounting Research",
                    "Review of Accounting Studies"],
     "Strategy & Organization": ["Academy of Management Journal", "Academy of Management Review",
                                   "Strategic Management Journal", "Harvard Business Review",
@@ -41,6 +41,62 @@ JOURNAL_CATEGORIES = {
                                   "Journal of Business Venturing", "Journal of Management"],
     "Management": ["Management Science"],
 }
+
+# VC/PE 主题关键词
+VC_PE_KEYWORDS = [
+    "venture capital", "vc fund", "venture fund", "venture investment",
+    "private equity", "pe fund", "buyout fund", "lbo fund",
+    "entrepreneurial finance", "startup finance", "new venture",
+    "angel investment", "angel investor", "angel fund",
+    "corporate venture", "corporate venture capital", "cvc",
+    "government venture", "government guidance fund",
+    "guide fund", "guidance fund",
+    "fund of funds", "fund-of-funds",
+    "limited partner", "lp investor", "lp commitment",
+    "general partner", "gp management",
+    "pe buyout", "leveraged buyout", "lbo",
+    "mezzanine financing", "growth equity",
+    "portfolio company", "deal sourcing", "deal screening",
+    "investment screening", "due diligence",
+    "exit strategy", "ipo", "initial public offering",
+    "venture exit", "pe exit", "acquisition exit",
+    "investment performance", "fund performance", "irr", "return",
+    "capital commitment", "capital call", "dry powder",
+    "co-investment", "syndicate", "investment syndicate",
+    "deal flow", "transaction", "m&a",
+    "entrepreneurship", "entrepreneurial", "startup", "nascent venture",
+    "innovation", "technological innovation",
+    "vc", "pe", "cvc", "cve",
+]
+
+# 排除关键词
+EXCLUDE_KEYWORDS = [
+    "medical", "medicine", "healthcare", "biology", "biochemistry",
+    "physics", "chemistry", "engineering", "materials",
+    "agriculture", "environmental science", "ecology", "climate",
+    "education", "psychology", "sociology",
+    "agricultural economics", "health economics",
+]
+
+START_YEAR = 2000
+
+
+def is_vc_pe_paper(paper):
+    """判断论文是否与 VC/PE 主题相关"""
+    title = paper.get("title", "").lower()
+    abstract = paper.get("abstract", "").lower()
+    keywords = " ".join(paper.get("keywords", [])).lower()
+    text = f"{title} {abstract} {keywords}"
+
+    for kw in EXCLUDE_KEYWORDS:
+        if kw in text:
+            return False
+
+    match_count = 0
+    for kw in VC_PE_KEYWORDS:
+        if kw.lower() in text:
+            match_count += 1
+    return match_count >= 1
 
 
 def get_paper_category(paper):
@@ -226,17 +282,25 @@ def get_papers():
     """
     获取论文列表
     支持分页、搜索、筛选、来源筛选
+    仅返回与 VC/PE 主题相关的论文
     """
     papers = load_papers()
-    
+
     # 数据来源筛选
     source = request.args.get("source", "").strip()
     if source == "ssrn":
         papers = load_ssrn_papers()
     elif source == "journal":
         papers = load_papers()
-    # 默认：两种都返回
-    
+
+    # VC/PE 主题过滤（默认开启）
+    vc_pe_filter = request.args.get("vcpe", "1").strip()
+    if vc_pe_filter == "1":
+        papers = [p for p in papers if is_vc_pe_paper(p)]
+
+    # 年份过滤（2000年至今）
+    papers = [p for p in papers if int(p.get("year", "0") or 0) >= START_YEAR]
+
     # 搜索（仅搜索相关论文）
     q = request.args.get("q", "").strip().lower()
     if q:
@@ -335,12 +399,15 @@ def get_stats():
     """获取统计信息"""
     papers = load_papers()
     ssrn_papers = load_ssrn_papers()
-    
+
+    # 仅统计 VC/PE 主题论文
+    papers = [p for p in papers if is_vc_pe_paper(p) and int(p.get("year", "0") or 0) >= START_YEAR]
+
     journals = {}
     categories = {}
     years = {}
     oa_count = 0
-    
+
     for p in papers:
         cat = get_paper_category(p)
         categories[cat] = categories.get(cat, 0) + 1

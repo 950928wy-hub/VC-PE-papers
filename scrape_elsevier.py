@@ -72,6 +72,47 @@ for category, journals in JOURNALS.items():
         VC_PE_JOURNALS.append({**j, "category": category})
 
 # 请求头 — polite pool（更低的限速）
+# ==================== VC/PE 主题关键词配置 ====================
+# 用于在抓取时过滤出与"风险投资/创业投资/私募股权"相关的论文
+# 中英文关键词全覆盖
+
+VC_PE_KEYWORDS = [
+    # 英文核心关键词
+    "venture capital", "vc fund", "venture fund", "venture investment",
+    "private equity", "pe fund", "buyout fund", "lbo fund",
+    "entrepreneurial finance", "startup finance", "new venture",
+    "angel investment", "angel investor", "angel fund",
+    "corporate venture", "corporate venture capital", "cvc",
+    "government venture", "government guidance fund",
+    "guide fund", "guidance fund",
+    "fund of funds", "fund-of-funds",
+    "limited partner", "lp investor", "lp commitment",
+    "general partner", "gp management",
+    "pe buyout", "leveraged buyout", "lbo",
+    "mezzanine financing", "growth equity",
+    "portfolio company", "deal sourcing", "deal screening",
+    "investment screening", "due diligence",
+    "exit strategy", "ipo", "initial public offering",
+    "venture exit", "pe exit", "acquisition exit",
+    "investment performance", "fund performance", "irr", "return",
+    "capital commitment", "capital call", "dry powder",
+    "co-investment", "syndicate", "investment syndicate",
+    "deal flow", "transaction", "m&a",
+    "entrepreneurship", "entrepreneurial", "startup", "nascent venture",
+    "innovation", "technological innovation",
+    # 缩写/简称
+    "vc", "pe", "cvc", "cve",
+]
+
+# 排除关键词（排除不相关的领域）
+EXCLUDE_KEYWORDS = [
+    "medical", "medicine", "healthcare", "biology", "biochemistry",
+    "physics", "chemistry", "engineering", "materials",
+    "agriculture", "environmental science", "ecology", "climate",
+    "education", "psychology", "sociology",
+    "agricultural economics", "health economics",
+]
+
 HEADERS = {
     "User-Agent": "VC-PE-Paper-Feed/3.0 (mailto:yanyan@example.com)",
     "Accept": "application/json",
@@ -84,6 +125,9 @@ MAX_DELAY = 3.5
 
 # CrossRef 每请求最多返回条数
 PER_PAGE = 100
+
+# 抓取年份范围
+START_YEAR = 2000
 
 
 # ==================== SSL / 请求配置 ====================
@@ -149,6 +193,7 @@ def fetch_journal_works(issn, journal_name, max_rows=200):
     通过 CrossRef API 获取某期刊的最新论文
     每次请求 PER_PAGE 条，按发表日期降序，
     通过游标（cursor）或分页（offset）翻页
+    只获取 START_YEAR 之后的论文
     """
     url = f"https://api.crossref.org/journals/{issn}/works"
     all_items = []
@@ -156,9 +201,11 @@ def fetch_journal_works(issn, journal_name, max_rows=200):
 
     params = {
         "rows": PER_PAGE,
-        "sort": "created",
+        "sort": "published-date",
         "order": "desc",
         "mailto": "yanyan@example.com",
+        # 只获取 2000 年之后的论文，减少无效请求
+        "filter": f"from-pub-date:{START_YEAR}",
     }
 
     while fetched < max_rows:
@@ -314,16 +361,46 @@ def parse_crossref_item(item, journal_name, category=""):
 
 # ==================== 期刊扫描 ====================
 
+def is_vc_pe_paper(paper):
+    """
+    判断论文是否与 VC/PE 主题相关
+    检查标题、摘要、关键词
+    """
+    title = paper.get("title", "").lower()
+    abstract = paper.get("abstract", "").lower()
+    keywords = " ".join(paper.get("keywords", [])).lower()
+    journal = paper.get("journal", "").lower()
+
+    text = f"{title} {abstract} {keywords}"
+
+    # 排除不相关领域
+    for kw in EXCLUDE_KEYWORDS:
+        if kw in text:
+            return False
+
+    # 检查是否匹配 VC/PE 关键词
+    match_count = 0
+    for kw in VC_PE_KEYWORDS:
+        if kw.lower() in text:
+            match_count += 1
+
+    # 至少匹配 1 个关键词
+    return match_count >= 1
+
+
 def scrape_all(max_articles_per_journal=200):
     print("=" * 60)
-    print("学术论文抓取系统 — CrossRef API")
+    print("VC/PE 学术论文抓取系统 — CrossRef API")
     print(f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"期刊数: {len(VC_PE_JOURNALS)} 种")
+    print(f"年份范围: {START_YEAR}-2026")
+    print(f"主题: 风险投资 / 创业投资 / 私募股权")
     print("=" * 60)
 
     existing = load_existing()
     new_count = 0
     skip_count = 0
+    irrelevant_count = 0
 
     for journal in VC_PE_JOURNALS:
         issn = journal["issn"]
@@ -335,6 +412,23 @@ def scrape_all(max_articles_per_journal=200):
 
         for raw_item in items:
             article = parse_crossref_item(raw_item, name, category)
+
+            # 年份过滤：跳过 2000 年之前的
+            year_str = article.get("year", "")
+            if year_str:
+                try:
+                    year_int = int(year_str)
+                    if year_int < START_YEAR:
+                        skip_count += 1
+                        continue
+                except:
+                    pass
+
+            # VC/PE 主题相关性过滤
+            if not is_vc_pe_paper(article):
+                irrelevant_count += 1
+                continue
+
             key = article.get("doi") or article.get("title", "")
 
             if not key:
@@ -354,7 +448,11 @@ def scrape_all(max_articles_per_journal=200):
         random_delay()
 
     print(f"\n{'=' * 60}")
-    print(f"抓取完成！新增 {new_count} 篇 | 跳过已有 {skip_count} 篇 | 共 {len(existing)} 篇")
+    print(f"抓取完成！")
+    print(f"  新增论文: {new_count} 篇")
+    print(f"  跳过已有: {skip_count} 篇")
+    print(f"  主题不符: {irrelevant_count} 篇")
+    print(f"  共收录: {len(existing)} 篇")
     print("=" * 60)
 
     save_papers(existing)
@@ -409,6 +507,8 @@ def generate_report(papers):
         "by_category": categories,
         "by_year": dict(sorted(years.items(), reverse=True)),
         "fetched_at": datetime.now().isoformat(),
+        "start_year": START_YEAR,
+        "topic": "VC/PE 风险投资/创业投资/私募股权",
     }
 
     report_file = os.path.join(DATA_DIR, "scrape_report.json")
