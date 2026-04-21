@@ -25,34 +25,51 @@ os.makedirs(DATA_DIR, exist_ok=True)
 OUTPUT_FILE = os.path.join(DATA_DIR, "elsevier_papers.json")
 ARCHIVE_FILE = os.path.join(DATA_DIR, "elsevier_archive.json")
 
-# VC/PE 领域核心期刊 ISSN 列表
-VC_PE_JOURNALS = [
-    # 企业金融 / 风险投资
-    {"name": "Journal of Corporate Finance",        "issn": "0929-1199"},
-    {"name": "Journal of Business Venturing",        "issn": "0883-9026"},
-    {"name": "Journal of Financial Intermediation",   "issn": "1042-9573"},
-    {"name": "Journal of Banking & Finance",          "issn": "0378-4266"},
-    # 私募股权 / 并购
-    {"name": "Journal of Financial Economics",        "issn": "0304-405X"},
-    {"name": "Journal of Economics & Business",        "issn": "0148-6195"},
-    # 公司治理 / 业绩
-    {"name": "Technovation",                          "issn": "0166-4972"},
-    {"name": "Research Policy",                        "issn": "0048-7333"},
-    # 创业 / 创新 / 技术转移
-    {"name": "Journal of Technology Transfer",        "issn": "0892-9912"},
-    {"name": "Journal of Small Business Management",  "issn": "0047-2778"},
-    # 金融 / 经济学综合
-    {"name": "Journal of Financial Markets",           "issn": "1386-4181"},
-    {"name": "Journal of Empirical Finance",           "issn": "0927-5398"},
-    {"name": "Journal of International Money and Finance", "issn": "0261-5606"},
-    # 发展经济学 / 新兴市场
-    {"name": "World Development",                      "issn": "0305-750X"},
-    {"name": "Journal of Development Economics",       "issn": "0304-3878"},
-    {"name": "China Economic Review",                   "issn": "1043-951X"},
-    # 资本市场
-    {"name": "Journal of Financial Markets & Institutions", "issn": "2213-0623"},
-    {"name": "Review of Financial Studies",            "issn": "0893-9454"},
-]
+# 导师指定的权威期刊列表（按领域分类）
+# Finance / Economic / Accounting / Strategy & Organization / Management
+
+JOURNALS = {
+    "Finance": [
+        {"name": "Journal of Finance", "issn": "0022-1082"},
+        {"name": "Journal of Financial and Quantitative Analysis", "issn": "0022-1099"},
+        {"name": "Journal of Financial Economics", "issn": "0304-405X"},
+        {"name": "Review of Financial Studies", "issn": "0893-9454"},
+        {"name": "Review of Finance", "issn": "1573-7179"},
+        {"name": "Journal of Banking and Finance", "issn": "0378-4266"},
+        {"name": "Journal of Corporate Finance", "issn": "0929-1199"},
+    ],
+    "Economic": [
+        {"name": "Journal of Economic Literature", "issn": "0022-0515"},
+        {"name": "Journal of Economic Perspectives", "issn": "0895-3309"},
+        {"name": "Journal of Economics and Management Strategy", "issn": "1058-6407"},
+    ],
+    "Accounting": [
+        {"name": "Accounting Review", "issn": "0001-4826"},
+        {"name": "Contemporary Accounting Research", "issn": "0829-3148"},
+        {"name": "Journal of Accounting and Economics", "issn": "0165-4101"},
+        {"name": "Journal of Accounting Research", "issn": "0021-8456"},
+        {"name": "Review of Accounting Studies", "issn": "1380-6653"},
+    ],
+    "Strategy & Organization": [
+        {"name": "Academy of Management Journal", "issn": "0001-4273"},
+        {"name": "Academy of Management Review", "issn": "0363-7425"},
+        {"name": "Strategic Management Journal", "issn": "0142-2303"},
+        {"name": "Harvard Business Review", "issn": "0017-8012"},
+        {"name": "Organization Science", "issn": "1047-7039"},
+        {"name": "Journal of International Business Studies", "issn": "0047-2506"},
+        {"name": "Journal of Business Venturing", "issn": "0883-9026"},
+        {"name": "Journal of Management", "issn": "0149-2063"},
+    ],
+    "Management": [
+        {"name": "Management Science", "issn": "0025-1909"},
+    ],
+}
+
+# 扁平化期刊列表供抓取使用
+VC_PE_JOURNALS = []
+for category, journals in JOURNALS.items():
+    for j in journals:
+        VC_PE_JOURNALS.append({**j, "category": category})
 
 # 请求头 — polite pool（更低的限速）
 HEADERS = {
@@ -208,10 +225,11 @@ def fetch_journal_works(issn, journal_name, max_rows=200):
     return all_items[:max_rows]
 
 
-def parse_crossref_item(item, journal_name):
+def parse_crossref_item(item, journal_name, category=""):
     """将 CrossRef 单条记录转为论文字典"""
     article = {
         "journal": journal_name,
+        "category": category,
         "fetched_at": datetime.now().isoformat(),
         "source": "CrossRef API",
     }
@@ -298,7 +316,7 @@ def parse_crossref_item(item, journal_name):
 
 def scrape_all(max_articles_per_journal=200):
     print("=" * 60)
-    print("VC & PE 论文抓取 v3 — CrossRef API")
+    print("学术论文抓取系统 — CrossRef API")
     print(f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"期刊数: {len(VC_PE_JOURNALS)} 种")
     print("=" * 60)
@@ -310,12 +328,13 @@ def scrape_all(max_articles_per_journal=200):
     for journal in VC_PE_JOURNALS:
         issn = journal["issn"]
         name = journal["name"]
-        print(f"\n📡 {name} ({issn})")
+        category = journal.get("category", "")
+        print(f"\n📡 [{category}] {name} ({issn})")
 
         items = fetch_journal_works(issn, name, max_articles_per_journal)
 
         for raw_item in items:
-            article = parse_crossref_item(raw_item, name)
+            article = parse_crossref_item(raw_item, name, category)
             key = article.get("doi") or article.get("title", "")
 
             if not key:
@@ -348,6 +367,7 @@ def scrape_all(max_articles_per_journal=200):
 
 def generate_report(papers):
     journals = {}
+    categories = {}
     years = {}
     oa_count = 0
     has_abstract = 0
@@ -355,6 +375,10 @@ def generate_report(papers):
     for p in papers:
         j = p.get("journal", "未知")
         journals[j] = journals.get(j, 0) + 1
+        
+        cat = p.get("category", "其他")
+        categories[cat] = categories.get(cat, 0) + 1
+        
         y = p.get("year", "未知")
         years[y] = years.get(y, 0) + 1
         if p.get("is_oa"):
@@ -367,6 +391,11 @@ def generate_report(papers):
     print(f"   有摘要: {has_abstract} 篇 ({100*has_abstract//max(len(papers),1)}%)")
     print(f"   OA 论文: {oa_count} 篇")
     print(f"   期刊数量: {len(journals)} 种")
+    
+    print(f"\n   📁 分类分布:")
+    for cat, c in sorted(categories.items(), key=lambda x: -x[1]):
+        print(f"     {cat}: {c} 篇")
+    
     print(f"\n   期刊分布（前 10）:")
     for j, c in sorted(journals.items(), key=lambda x: -x[1])[:10]:
         print(f"     {j}: {c} 篇")
@@ -377,6 +406,7 @@ def generate_report(papers):
         "oa_count": oa_count,
         "journal_count": len(journals),
         "by_journal": journals,
+        "by_category": categories,
         "by_year": dict(sorted(years.items(), reverse=True)),
         "fetched_at": datetime.now().isoformat(),
     }

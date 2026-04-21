@@ -1,4 +1,4 @@
-name: Weekly Paper Scrape
+name: Weekly Paper Scrape & Report
 
 on:
   schedule:
@@ -19,15 +19,16 @@ jobs:
           python-version: '3.11'
           
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install requests beautifulsoup4 lxml
+        run: pip install -r requirements.txt
           
-      - name: Run scraper
+      - name: Scrape journal papers
         run: python scrape_elsevier.py 200
-        env:
-          SCIENCEDIRECT_API_KEY: ${{ secrets.SCIENCEDIRECT_API_KEY }}
-          SCIENCEDIRECT_COOKIE: ${{ secrets.SCIENCEDIRECT_COOKIE }}
+          
+      - name: Scrape SSRN papers
+        run: python scrape_ssrn.py 30 200 || echo "SSRN scrape skipped"
+          
+      - name: Generate weekly report
+        run: python weekly_report.py
           
       - name: Check for changes
         id: git-check

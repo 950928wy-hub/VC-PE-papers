@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一周综述 — 学术论文推送站</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a5c;
+            --accent: #e85d04;
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --text: #1a1a2e;
+            --text-secondary: #6c757d;
+            --border: #e9ecef;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #2a5a8c 100%);
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .back-link:hover { color: white; }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-meta {
+            font-size: 0.85rem;
+            opacity: 0.85;
+        }
+
+        .highlight-bar {
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent) 0%, #f48c06 100%);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .summary-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .report-content {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+        }
+
+        .report-content h2 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .report-content h2:first-child { margin-top: 0; }
+
+        .report-content h3 {
+            color: var(--text);
+            font-size: 1rem;
+            margin: 1.2rem 0 0.8rem;
+        }
+
+        .report-content p {
+            margin-bottom: 1rem;
+        }
+
+        .report-content ul {
+            margin: 0.5rem 0 1rem 1.5rem;
+        }
+
+        .report-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .report-content blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .report-content a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .report-content a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .error-state {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-secondary);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 600px) {
+            .summary-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="highlight-bar"></div>
+
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="back-link">← 返回论文列表</a>
+            <h1>📚 一周学术论文综述</h1>
+            <p class="header-meta">权威期刊最新论文 + SSRN 工作论文</p>
+        </div>
+    </header>
+
+    <div class="container" id="app">
+        <div class="loading">
+            <div class="loading-spinner"></div>
+            <p>正在加载周报...</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>学术论文推送站 · 数据来源: CrossRef API, SSRN · 仅供学术研究使用</p>
+    </footer>
+
+    <script>
+        async function loadReport() {
+            const app = document.getElementById('app');
+            
+            try {
+                const resp = await fetch('/api/weekly-report');
+                
+                if (!resp.ok) {
+                    app.innerHTML = `
+                        <div class="error-state">
+                            <h2>暂无周报</h2>
+                            <p style="margin-top: 1rem; color: var(--text-secondary);">
+                                请先运行抓取脚本生成周报数据。
+                            </p>
+                            <p style="margin-top: 0.5rem; color: var(--text-secondary); font-size: 0.85rem;">
+                                命令: <code style="background: #eee; padding: 0.2rem 0.5rem; border-radius: 4px;">python weekly_report.py</code>
+                            </p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const data = await resp.json();
+                
+                // 生成日期显示
+                const startDate = new Date(data.period.start).toLocaleDateString('zh-CN');
+                const endDate = new Date(data.period.end).toLocaleDateString('zh-CN');
+                
+                // 生成 HTML
+                let html = `
+                    <div class="summary-card">
+                        <h2 style="color: var(--primary); margin-bottom: 0.5rem;">📊 本周数据概览</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            统计周期: ${startDate} ~ ${endDate}
+                        </p>
+                        <div class="summary-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">${data.summary.journal_papers}</div>
+                                <div class="stat-label">期刊论文</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${data.summary.ssrn_papers}</div>
+                                <div class="stat-label">SSRN 工作论文</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${data.summary.journals_count}</div>
+                                <div class="stat-label">涉及期刊</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${Object.values(data.by_category || {}).reduce((a, b) => a + b, 0)}</div>
+                                <div class="stat-label">论文总数</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="report-content">
+                        <h2>📋 论文列表</h2>
+                `;
+                
+                // 按分类显示论文
+                const categoryNames = {
+                    'Finance': '💰 金融',
+                    'Economic': '📊 经济',
+                    'Accounting': '📒 会计',
+                    'Strategy & Organization': '🏢 战略与组织',
+                    'Management': '⚙️ 管理',
+                    'Other': '📄 其他'
+                };
+                
+                for (const [cat, papers] of Object.entries(data.by_category || {})) {
+                    if (papers > 0) {
+                        html += `<h3>${categoryNames[cat] || cat} (${papers} 篇)</h3>`;
+                        
+                        // 获取该分类的论文
+                        const catPapers = data.papers.filter(p => 
+                            (p.category === cat) || 
+                            (p.relevance_category === cat)
+                        ).slice(0, 10);
+                        
+                        if (catPapers.length > 0) {
+                            html += '<ul>';
+                            catPapers.forEach((p, i) => {
+                                const title = p.title || '无标题';
+                                const authors = (p.authors || []).slice(0, 3).join(', ');
+                                const journal = p.journal || 'SSRN';
+                                const year = p.year || '';
+                                const url = p.url || (p.doi ? `https://doi.org/${p.doi}` : '#');
+                                
+                                html += `
+                                    <li>
+                                        <strong>${title}</strong><br>
+                                        <span style="color: var(--text-secondary); font-size: 0.85rem;">
+                                            ${authors}${authors ? ' · ' : ''}<em>${journal}</em>${year ? `, ${year}` : ''}
+                                        </span>
+                                    </li>
+                                `;
+                            });
+                            html += '</ul>';
+                        }
+                    }
+                }
+                
+                html += `
+                        <h2 style="margin-top: 2rem;">📝 使用说明</h2>
+                        <ul>
+                            <li>点击论文标题可前往期刊网站查看全文</li>
+                            <li>开放获取 (OA) 论文可直接下载 PDF</li>
+                            <li>如需完整列表，请在主页使用筛选功能</li>
+                        </ul>
+                    </div>
+                `;
+                
+                app.innerHTML = html;
+                
+            } catch (err) {
+                app.innerHTML = `
+                    <div class="error-state">
+                        <h2>加载失败</h2>
+                        <p style="margin-top: 1rem; color: var(--text-secondary);">
+                            请稍后重试，或检查网络连接。
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        loadReport();
+    </script>
+</body>
+</html>
