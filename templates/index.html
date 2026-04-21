@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VC/PE 论文站 — 风险投资 · 创业投资 · 私募股权 | 商科权威期刊</title>
+    <title>VC/PE 学术论文推送站 — 风险投资 · 创业投资 · 私募股权 · 引导基金</title>
     <link rel="stylesheet" href="/static/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -17,7 +17,7 @@
             --text: #1a1a2e;
             --text-secondary: #6c757d;
             --border: #e9ecef;
-            
+
             /* Category colors */
             --cat-finance: #1e88e5;
             --cat-finance-bg: #e3f2fd;
@@ -102,6 +102,23 @@
         .header-sub {
             font-size: 0.95rem;
             opacity: 0.85;
+        }
+
+        .header-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .header-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 0.25rem 0.7rem;
+            border-radius: 15px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .header-stats {
@@ -220,7 +237,7 @@
             margin: 0 auto;
             padding: 1.5rem 2rem;
             display: grid;
-            grid-template-columns: 260px 1fr;
+            grid-template-columns: 280px 1fr;
             gap: 1.5rem;
         }
 
@@ -247,6 +264,36 @@
             letter-spacing: 0.05em;
             color: var(--text-secondary);
             margin-bottom: 0.8rem;
+        }
+
+        /* VC/PE Topic Pills */
+        .vcpe-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .vcpe-topic-pill {
+            padding: 0.35rem 0.7rem;
+            border-radius: 15px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            cursor: pointer;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .vcpe-topic-pill:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .vcpe-topic-pill.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
         }
 
         /* Search */
@@ -444,7 +491,24 @@
             padding: 0.8rem;
             background: var(--bg);
             border-radius: 8px;
-            border-left: 3px solid var(--primary);
+            border-left: 3px solid var(--accent);
+        }
+
+        /* VC/PE Tags */
+        .paper-vcpe-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .paper-vcpe-tag {
+            padding: 0.2rem 0.6rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 500;
         }
 
         .paper-tags {
@@ -618,9 +682,16 @@
         <div class="header-inner">
             <div class="header-top">
                 <div>
-                    <span class="header-badge">VC/PE · 风险投资/私募股权</span>
-                    <h1>VC/PE 学术论文站</h1>
-                    <p class="header-sub">Venture Capital · Private Equity · 风险投资 · 私募股权</p>
+                    <span class="header-badge">VC/PE 学术论文推送站</span>
+                    <h1>风险投资 · 私募股权</h1>
+                    <p class="header-sub">创业投资 | 引导基金 | 公司创业投资 | 学术期刊 + SSRN</p>
+                    <div class="header-tags">
+                        <span class="header-tag">🎯 风险投资</span>
+                        <span class="header-tag">💰 私募股权</span>
+                        <span class="header-tag">🏛️ 政府引导基金</span>
+                        <span class="header-tag">🚀 创业投资</span>
+                        <span class="header-tag">🏢 公司创业投资</span>
+                    </div>
                 </div>
                 <a href="/weekly-report" class="weekly-btn" target="_blank">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -662,7 +733,7 @@
             <button class="category-btn" data-cat="Accounting">📒 Accounting</button>
             <button class="category-btn" data-cat="Strategy & Organization">🏢 Strategy</button>
             <button class="category-btn" data-cat="Management">⚙️ Management</button>
-            
+
             <div class="source-toggle">
                 <span>来源:</span>
                 <div class="toggle-group">
@@ -677,7 +748,7 @@
     <div class="main-container">
         <aside class="sidebar">
             <div class="sidebar-card">
-                <div class="sidebar-title">搜索</div>
+                <div class="sidebar-title">🔍 搜索</div>
                 <div class="search-box">
                     <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
@@ -687,7 +758,24 @@
             </div>
 
             <div class="sidebar-card">
-                <div class="sidebar-title">年份</div>
+                <div class="sidebar-title">🎯 VC/PE 主题</div>
+                <div class="vcpe-topics" id="vcpe-topics">
+                    <span class="vcpe-topic-pill active" data-topic="">全部</span>
+                    <span class="vcpe-topic-pill" data-topic="风险投资/创业投资">风险投资</span>
+                    <span class="vcpe-topic-pill" data-topic="私募股权">私募股权</span>
+                    <span class="vcpe-topic-pill" data-topic="政府引导基金">引导基金</span>
+                    <span class="vcpe-topic-pill" data-topic="LP/GP">LP/GP</span>
+                    <span class="vcpe-topic-pill" data-topic="退出机制">退出机制</span>
+                    <span class="vcpe-topic-pill" data-topic="公司创业投资">公司创业投资</span>
+                    <span class="vcpe-topic-pill" data-topic="创业与创新">创业创新</span>
+                    <span class="vcpe-topic-pill" data-topic="业绩与回报">业绩回报</span>
+                    <span class="vcpe-topic-pill" data-topic="投资决策">投资决策</span>
+                    <span class="vcpe-topic-pill" data-topic="公司治理">公司治理</span>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <div class="sidebar-title">📅 年份</div>
                 <div class="year-pills" id="year-filters">
                     <span class="year-pill active" data-year="">全部</span>
                     <span class="year-pill" data-year="2026">2026</span>
@@ -695,13 +783,23 @@
                     <span class="year-pill" data-year="2024">2024</span>
                     <span class="year-pill" data-year="2023">2023</span>
                     <span class="year-pill" data-year="2022">2022</span>
+                    <span class="year-pill" data-year="2021">2021</span>
+                    <span class="year-pill" data-year="2020">2020</span>
+                    <span class="year-pill" data-year="2019">2019</span>
+                    <span class="year-pill" data-year="2018">2018</span>
+                    <span class="year-pill" data-year="2017">2017</span>
+                    <span class="year-pill" data-year="2016">2016</span>
+                    <span class="year-pill" data-year="2015">2015</span>
+                    <span class="year-pill" data-year="2010">2010</span>
+                    <span class="year-pill" data-year="2005">2005</span>
+                    <span class="year-pill" data-year="2000">2000</span>
                 </div>
             </div>
         </aside>
 
         <main class="paper-list">
             <div class="paper-list-header">
-                <div class="paper-count">共 <strong id="paper-total">--</strong> 篇论文</div>
+                <div class="paper-count">共 <strong id="paper-total">--</strong> 篇 VC/PE 相关论文</div>
                 <select class="sort-select" id="sort-select">
                     <option value="newest">最新优先</option>
                     <option value="oldest">最早优先</option>
@@ -721,8 +819,8 @@
     </div>
 
     <footer class="footer">
-        <p>VC/PE 学术论文站 · 数据来源: CrossRef API, SSRN · 仅供学术研究使用</p>
-        <p style="margin-top: 0.3rem; opacity: 0.7;">专注: 风险投资 · 创业投资 · 私募股权 · 政府引导基金 · 收录 UT-Dallas 24 / FT 50 权威期刊</p>
+        <p>VC/PE 学术论文推送站 · 数据来源: CrossRef API, SSRN · 仅供学术研究使用</p>
+        <p style="margin-top: 0.3rem; opacity: 0.7;">收录 UT-Dallas 24 / FT 50 权威期刊 · 专注风险投资/私募股权/引导基金</p>
     </footer>
 
     <script src="/static/js/app.js"></script>
@@ -732,10 +830,22 @@
             category: '',
             source: '',
             year: '',
+            topic: '',
             q: '',
             sort: 'newest',
             page: 1
         };
+
+        // VC/PE Topic filter
+        document.querySelectorAll('.vcpe-topic-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('.vcpe-topic-pill').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                currentFilters.topic = pill.dataset.topic;
+                currentFilters.page = 1;
+                fetchPapers();
+            });
+        });
 
         // Category navigation
         document.querySelectorAll('.category-btn').forEach(btn => {
@@ -794,6 +904,7 @@
             if (currentFilters.category) params.append('category', currentFilters.category);
             if (currentFilters.source) params.append('source', currentFilters.source);
             if (currentFilters.year) params.append('year', currentFilters.year);
+            if (currentFilters.topic) params.append('topic', currentFilters.topic);
             if (currentFilters.q) params.append('q', currentFilters.q);
             params.append('sort', currentFilters.sort);
             params.append('page', currentFilters.page);
@@ -815,17 +926,23 @@
         // Render papers
         function renderPapers(data) {
             const container = document.getElementById('paper-list-container');
-            
+
             if (!data.papers || data.papers.length === 0) {
-                container.innerHTML = '<div class="empty-state"><p>暂无论文</p></div>';
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3>暂未找到 VC/PE 相关论文</h3>
+                        <p>请调整筛选条件或等待新论文入库</p>
+                    </div>
+                `;
                 return;
             }
 
             container.innerHTML = data.papers.map(paper => {
                 const category = paper.category || 'Other';
-                const tags = (paper.auto_tags || []).slice(0, 4);
+                const tags = (paper.auto_tags || []).filter(t => !['中国', '美国', '欧洲', '其他'].includes(t));
+                const regionTags = (paper.auto_tags || []).filter(t => ['中国', '美国', '欧洲'].includes(t));
                 const isSsrn = paper.source === 'SSRN' || paper.paper_type === 'working_paper';
-                
+
                 return `
                     <div class="paper-card">
                         <div>
@@ -841,14 +958,19 @@
                         <div class="paper-authors">
                             👤 ${(paper.authors || []).slice(0, 4).join(', ')}${(paper.authors || []).length > 4 ? ' et al.' : ''}
                         </div>
-                        ${paper.abstract ? `<div class="paper-abstract">${paper.abstract.slice(0, 250)}${paper.abstract.length > 250 ? '...' : ''}</div>` : ''}
+                        ${paper.abstract ? `<div class="paper-abstract">${paper.abstract.slice(0, 300)}${paper.abstract.length > 300 ? '...' : ''}</div>` : ''}
                         ${tags.length > 0 ? `
+                            <div class="paper-vcpe-tags">
+                                ${tags.slice(0, 4).map(t => `<span class="paper-vcpe-tag">${t}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                        ${regionTags.length > 0 ? `
                             <div class="paper-tags">
-                                ${tags.map(t => `<span class="paper-tag">${t}</span>`).join('')}
+                                ${regionTags.map(t => `<span class="paper-tag">${t}</span>`).join('')}
                             </div>
                         ` : ''}
                         <div class="paper-actions">
-                            <a href="${paper.url || paper.doi ? `https://doi.org/${paper.doi}` : '#'}" 
+                            <a href="${paper.url || paper.doi ? `https://doi.org/${paper.doi}` : '#'}"
                                class="btn btn-primary" target="_blank" ${!paper.doi ? 'onclick="return false;"' : ''}>
                                 前往期刊
                             </a>
@@ -867,25 +989,25 @@
         function renderPagination(data) {
             const container = document.getElementById('pagination');
             const { page, total_pages } = data;
-            
+
             if (total_pages <= 1) {
                 container.innerHTML = '';
                 return;
             }
 
             let html = '';
-            
+
             // Prev
             html += `<a class="page-btn ${page === 1 ? 'disabled' : ''}" data-page="${page - 1}">‹</a>`;
-            
+
             // Pages
             for (let i = 1; i <= Math.min(total_pages, 10); i++) {
                 html += `<a class="page-btn ${i === page ? 'active' : ''}" data-page="${i}">${i}</a>`;
             }
-            
+
             // Next
             html += `<a class="page-btn ${page === total_pages ? 'disabled' : ''}" data-page="${page + 1}">›</a>`;
-            
+
             container.innerHTML = html;
 
             // Add listeners
