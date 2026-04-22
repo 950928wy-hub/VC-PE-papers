@@ -1,0 +1,529 @@
+{
+  "generated_at": "2026-04-22T22:36:07.410430",
+  "period": {
+    "start": "2026-04-16T22:36:07.410545",
+    "end": "2026-04-22T22:36:07.410648"
+  },
+  "summary": {
+    "journal_papers": 20,
+    "ssrn_papers": 0,
+    "journals_count": 1
+  },
+  "by_category": {
+    "Finance": 20
+  },
+  "papers": [
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.318599",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf048",
+      "url": "https://doi.org/10.1093/rfs/hhaf048",
+      "title": "Leaky Director Networks and Innovation Herding",
+      "authors": [
+        "Felipe Cabezon",
+        "Gerard Hoberg"
+      ],
+      "year": "2026",
+      "abstract": "Abstract We first document that, despite potential legal issues, overlapping directors are surprisingly prevalent among direct competitors. Using panel data regressions and plausibly exogenous shocks, we find that competing firms in markets with dense overlapping-director networks experience innovation herding, lose product differentiation, and, ultimately, perform poorly. Novel text-based network propagation tests of technologies show that intellectual property leakage plays a role as firms with dense overlapping director networks experience faster propagation of technologies to competitors. Our findings suggest a coordination problem where industry participants cannot stop rivals from earning small gains from leakage despite much larger industry-wide negative externalities.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "1",
+      "page": "158-197",
+      "cited_by": 5,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.318489",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf050",
+      "url": "https://doi.org/10.1093/rfs/hhaf050",
+      "title": "Getting to the Core: Inflation Risks Within and Across Asset Classes",
+      "authors": [
+        "Xiang Fang",
+        "Yang Liu",
+        "Nikolai Roussanov"
+      ],
+      "year": "2026",
+      "abstract": "Abstract Do real assets protect against inflation? Stocks’ core inflation betas are negative, while their energy betas are positive. Currencies, commodities, and real estate mostly hedge against energy inflation, but not core inflation. These hedging properties are reflected in the prices of inflation risks: only core inflation carries a negative risk premium, and its magnitude is consistent within and across asset classes, uniquely among macroeconomic risk factors. Energy inflation has become more procyclical and volatile since the 1990s, which helps explain the time-varying correlation between stock and bond returns. A two-sector New Keynesian asset pricing model accounts for these facts quantitatively.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "3",
+      "page": "702-743",
+      "cited_by": 5,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.318390",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf052",
+      "url": "https://doi.org/10.1093/rfs/hhaf052",
+      "title": "Agency MBS as Safe Assets",
+      "authors": [
+        "Zhiguo He",
+        "Zhaogang Song"
+      ],
+      "year": "2026",
+      "abstract": "Abstract Measured as yield spreads against Treasury securities and AAA corporate bonds, the convenience premium of newly issued agency MBS averages more than half of the long-term Treasury convenience premium. The agency MBS convenience premium and issuance amount vary negatively with mortgage rate, consistent with a prepayment-driven channel. Placing agencies into conservatorship in 2008 and introducing liquidity regulations in 2013 significantly affected MBS convenience premium, consistent with government guarantee and regulatory treatment channels. Analyses of dispersion of dealers’ prepayment forecasts, seasoned MBS, and investors’ MBS holdings deliver further economic implications for agency MBS as safe assets.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "2",
+      "page": "387-426",
+      "cited_by": 3,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.318291",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf039",
+      "url": "https://doi.org/10.1093/rfs/hhaf039",
+      "title": "Dynamic Coordination and Bankruptcy Regulations",
+      "authors": [
+        "Hongda Zhong",
+        "Zhen Zhou"
+      ],
+      "year": "2026",
+      "abstract": "Abstract Many regulations aim to promote coordination among creditors in bankruptcy by ex post restricting their ability to exit distressed firms. However, such restrictions may harm creditors’ ex ante incentives to stay invested, thereby worsening coordination outcomes. We build a dynamic coordination model to show how this force shapes creditor runs, bankruptcy filings, and regulation designs. Intriguingly, filing for bankruptcy early, thereby preserving more assets for latecomers, can prolong firm life. Furthermore, regulators’ clawbacks on prebankruptcy repayments can be superior to firms’ commitment to early bankruptcy filing. Our analysis generates implications for automatic stay, avoidable preference, bank failures, and seniority structure.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "4",
+      "page": "1116-1176",
+      "cited_by": 1,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.318186",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf055",
+      "url": "https://doi.org/10.1093/rfs/hhaf055",
+      "title": "Failure to Share Natural Disaster Risk",
+      "authors": [
+        "Tuomas Tomunen"
+      ],
+      "year": "2026",
+      "abstract": "Abstract I test whether asset prices reflect risk exposures of financial intermediaries in a setting well-suited to tackling concerns about omitted risk factors. I analyze catastrophe bonds whose cash flows are linked to natural disasters and find that 71% of the security-level variation in expected returns can be explained by a theoretically motivated measure of intermediaries’ marginal utility. Assuming natural disasters are independent of aggregate wealth, this result is inconsistent with any alternative explanation based on unobserved macroeconomic risks. In addition, the aggregate premium decreases and becomes less sensitive to the occurrence of disasters when intermediaries’ access to outside capital improves.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "3",
+      "page": "661-701",
+      "cited_by": 0,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.318085",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf063",
+      "url": "https://doi.org/10.1093/rfs/hhaf063",
+      "title": "Option Pricing with Time-Varying Volatility Risk Aversion",
+      "authors": [
+        "Peter Reinhard Hansen",
+        "Chen Tong"
+      ],
+      "year": "2026",
+      "abstract": "Abstract We introduce a pricing kernel with time-varying volatility risk aversion to explain the observed time variations in the shape of the pricing kernel. When combined with the Heston-Nandi GARCH model, this framework yields a tractable option pricing model in which the variance risk ratio (VRR) emerges as a key variable. We show that the VRR is closely linked to economic fundamentals, as well as sentiment and uncertainty measures. A novel approximation method provides analytical option pricing formulas, and we demonstrate substantial reductions in pricing errors through an empirical application to the S&amp;P 500 index, the CBOE VIX, and option prices.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "3",
+      "page": "875-924",
+      "cited_by": 1,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.317975",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf067",
+      "url": "https://doi.org/10.1093/rfs/hhaf067",
+      "title": "Institutional Corporate Bond Pricing",
+      "authors": [
+        "Lorenzo Bretscher",
+        "Lukas Schmid",
+        "Ishita Sen",
+        "Varun Sharma"
+      ],
+      "year": "2026",
+      "abstract": "Abstract We propose an equilibrium corporate bond pricing model that accommodates the heterogeneity in institutional investors’ preferences and mandates in an empirically tractable way. Our model, estimated on rich holdings data, quantifies investors’ preferences and demand elasticities, with inelastic insurers focusing on the investment-grade segment, and elastic mutual funds substituting across ratings groups. The model offers a novel quantitative perspective of the effect of recent trends in institutional ownership on equilibrium credit spreads and the funding costs of corporations. Overall, our model emphasizes the composition of institutional demand as an important state variable for corporate bond pricing.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "3",
+      "page": "605-660",
+      "cited_by": 7,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.317624",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf062",
+      "url": "https://doi.org/10.1093/rfs/hhaf062",
+      "title": "Falling Behind: Has Rising Inequality Fueled the American Debt Boom?",
+      "authors": [
+        "Moritz Drechsel-Grau",
+        "Fabian Greimel"
+      ],
+      "year": "2026",
+      "abstract": "Abstract This paper studies whether the interplay of social comparisons in housing and rising income inequality contributed to the household debt boom in the United States between 1980 and 2007. We develop a tractable macroeconomic model with general social comparisons in housing to show that changes in the distribution of income affect aggregate housing demand, aggregate debt, and house prices if (and only if) social comparisons are asymmetric. In the empirically relevant case of upward-looking comparisons, rising inequality can rationalize a substantial share of the observed housing and debt boom.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "2",
+      "page": "459-517",
+      "cited_by": 0,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.317520",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf073",
+      "url": "https://doi.org/10.1093/rfs/hhaf073",
+      "title": "Understanding Rationality and Disagreement in House Price Expectations",
+      "authors": [
+        "Zigang Li",
+        "Stijn Van Nieuwerburgh",
+        "Wang Renxuan"
+      ],
+      "year": "2026",
+      "abstract": "Abstract Professional house price forecast data are consistent with a rational model where agents must learn about the parameters of the house price growth process and the underlying state of the housing market. Slow learning about the long-run mean generates overreaction to forecast revisions and a modest response of forecasts to lagged realizations. Heterogeneity in signals and priors about the long-run mean helps the model account for cross-sectional dispersion in forecasts. Introducing behavioral frictions helps improve the model’s predictions for short-horizon overreaction and dispersion. Using a cross-section of forecasters and a term structure of forecasts are crucial for inference.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "2",
+      "page": "297-342",
+      "cited_by": 0,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.317412",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf054",
+      "url": "https://doi.org/10.1093/rfs/hhaf054",
+      "title": "Willingness to Pay for Carbon Mitigation: Field Evidence from the Market for Carbon Offsets",
+      "authors": [
+        "Matthias Rodemeier"
+      ],
+      "year": "2026",
+      "abstract": "Abstract This paper estimates willingness to pay (WTP) for carbon mitigation from demand for carbon offsets in a field experiment with an online supermarket. The experiment randomizes whether the firm subsidizes the price of the offset or matches the offset’s impact on carbon mitigation. Consumers are price-elastic but fully impact-inelastic, implying that they buy the offset but their WTP for the carbon it mitigates is zero. If the firm informs consumers that it contributes to the offset costs, WTP increases to 16 EUR/tCO$ {}_{2} $. A complementary survey shows that consumers’ stated WTP is 238 EUR/tCO$ {}_{2} $, far above their revealed preferences.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "1",
+      "page": "1-29",
+      "cited_by": 1,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.317260",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf081",
+      "url": "https://doi.org/10.1093/rfs/hhaf081",
+      "title": "Dissecting Corporate Culture Using Generative AI",
+      "authors": [
+        "Kai Li",
+        "Feng Mai",
+        "Rui Shen",
+        "Chelsea Yang",
+        "Tengfei Zhang"
+      ],
+      "year": "2026",
+      "abstract": "Abstract We conduct the first large-scale study of how different stakeholder groups assess corporate culture and quantify the economic implications of those differences. We employ generative AI to analyze analyst reports, call transcripts, and employee reviews, and organize the extracted information into a knowledge graph that links a culture type to its perceived causes and effects. We demonstrate that the divergence in different stakeholder groups' assessment of culture aligns with their distinct roles and economic incentives. Moreover, we show that analysts' culture analyses are incorporated into stock recommendations and target prices, and investors react to divergence in stakeholders' assessment of culture.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "1",
+      "page": "253-296",
+      "cited_by": 6,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.317162",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf077",
+      "url": "https://doi.org/10.1093/rfs/hhaf077",
+      "title": "Regulating CEO Pay: Evidence from the Nonprofit Revitalization Act",
+      "authors": [
+        "Ilona Babenko",
+        "Benjamin Bennett",
+        "Rik Sen"
+      ],
+      "year": "2026",
+      "abstract": "Abstract This paper examines CEO pay at nonprofits. Using compensation data for 14,111 nonprofits, we find that CEO pay dropped by 2% after legislation in New York reduced CEOs’ ability to influence their own pay. Despite lower pay, CEOs exerted more effort, and nonprofit performance improved. The effects were stronger at commercial nonprofits than at charities and for male CEOs than female CEOs. These findings are consistent with a model where some nonprofit CEOs derive meaning from their work and compensation can be rigged. Overall, our results suggest that regulation that targets the pay-setting process can improve organizational outcomes at nonprofits.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "1",
+      "page": "198-252",
+      "cited_by": 0,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.317013",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf083",
+      "url": "https://doi.org/10.1093/rfs/hhaf083",
+      "title": "The Pace of Change: Socially Responsible Investing in Private Markets",
+      "authors": [
+        "Deeksha Gupta",
+        "Alexandr Kopytov",
+        "Jan Starmans"
+      ],
+      "year": "2026",
+      "abstract": "Abstract We show that socially responsible investors can have a negative impact by slowing the pace of firm reform. Investors with broad prosocial preferences value acquiring dirty firms with high negative production externalities because they can reform these firms. The anticipation of trading gains for dirty firms decreases the incentive of current firm owners to reduce externalities proactively, potentially causing delay in reform. The presence of financial investors—alongside socially responsible investors—can exacerbate delay. Investment mandates through which socially responsible investors commit to paying a premium for green firms can incentivize reform in a timely manner.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "1",
+      "page": "30-78",
+      "cited_by": 6,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.316910",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf084",
+      "url": "https://doi.org/10.1093/rfs/hhaf084",
+      "title": "Are All ESG Funds Created Equal? Only Some Funds Are Committed",
+      "authors": [
+        "Michelle Lowry",
+        "Pingle Wang",
+        "Kelsey D Wei"
+      ],
+      "year": "2026",
+      "abstract": "Abstract Environmental, social, and governance (ESG) funds have heterogeneous incentives to engage with portfolio firms. If funds view ESG as a value driver, then these incentives will affect funds’ behavior and thus their impact on firms. We compare ESG funds with similar levels of ESG investments but different incentives to engage. Funds with higher incentives to engage, that is, committed ESG funds, conduct more ESG-related information acquisition, pursue longer term investment strategies, engage more intensely on ESG issues, and have greater real impacts. Moreover, committed ESG funds have outperformed other ESG funds within subportfolios with higher and more effective ESG engagement.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "1",
+      "page": "79-113",
+      "cited_by": 9,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.316865",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf086",
+      "url": "https://doi.org/10.1093/rfs/hhaf086",
+      "title": "Why Do Traditional and Shadow Banks Coexist?",
+      "authors": [
+        "Victor Lyonnet",
+        "Edouard Chrétien"
+      ],
+      "year": "2026",
+      "abstract": "Abstract Traditional and shadow banks interacted in similar ways in the 2007 and COVID-19 crises, when both assets and liabilities flew out of shadow banks and into traditional banks. We explain these facts in a model of the coexistence of traditional and shadow banks in which liabilities and assets flow from the former to the latter in good times, avoiding regulation, and move the other way in a crisis, alleviating fire sales. The model sheds light on how regulations for traditional banks have (unintended) consequences on the shadow banking sector.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "4",
+      "page": "1015-1053",
+      "cited_by": 0,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.316816",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf060",
+      "url": "https://doi.org/10.1093/rfs/hhaf060",
+      "title": "Common Factors in Equity Option Returns",
+      "authors": [
+        "Alex Horenstein",
+        "Aurelio Vasquez",
+        "Xiao Xiao"
+      ],
+      "year": "2026",
+      "abstract": "Abstract We explore the factor structure in delta-hedged equity option returns. A sparse latent factor model generates a correlation of 0.90 or higher between average and predicted option returns. A comparable performance is achieved with a characteristic-based model containing four factors: the equally weighted option portfolio, a factor based on the difference between historical and implied volatilities, a factor based on the ratio of corporate cash holdings to the total value of the firm’s assets, and a factor based on volatility of volatility. Traditional stock return factors cannot explain these option factors.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "3",
+      "page": "835-874",
+      "cited_by": 2,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.316656",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf061",
+      "url": "https://doi.org/10.1093/rfs/hhaf061",
+      "title": "What Problem Do Intermediaries Solve? Evidence From Real Estate Markets",
+      "authors": [
+        "Darren Aiello",
+        "Mark Garmaise",
+        "Taylor Nadauld"
+      ],
+      "year": "2026",
+      "abstract": "Abstract We study intermediation in the housing market. Using data from an online platform utilized by real estate agents to generate leads, we identify exogenous intermediary attention arising from the quasi-randomized ordering of potential listings. Greater intermediary attention leads to an increased probability of listing with an agent and selling quickly, and a higher transaction price. The listing and transaction probabilities of neighboring properties decrease in intermediary attention. These results contrast sharply with endogenous correlations and provide causal evidence that intermediaries resolve property-level frictions deriving from search, information, or behavioral considerations but do not mitigate neighborhood-level information asymmetries.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "2",
+      "page": "562-604",
+      "cited_by": 0,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.316598",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf089",
+      "url": "https://doi.org/10.1093/rfs/hhaf089",
+      "title": "Price and Volume Divergence in China’s Real Estate Markets: The Role of Local Governments",
+      "authors": [
+        "Jeffery (Jinfan) Chang",
+        "Yuheng Wang",
+        "Wei Xiong"
+      ],
+      "year": "2026",
+      "abstract": "Abstract During the COVID-19 pandemic (2020-2022), Chinese cities witnessed a paradox: residential land and new house prices surged while transaction volumes plummeted. We attribute this to local governments’ active price management through supply controls, land acquisitions by local government financing vehicles (LGFVs), and limits on new home sales permits. Cities more dependent on land sales and land-backed debt before the pandemic experienced greater price increases and price–volume divergence, with LGFVs buying more land at higher prices than other buyers. These interventions helped sustain fiscal financing but deepened developers’ financial distress, revealing unintended consequences of local governments’ fiscal strategies during downturns.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "2",
+      "page": "343-386",
+      "cited_by": 0,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.316493",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf071",
+      "url": "https://doi.org/10.1093/rfs/hhaf071",
+      "title": "Banking-Crisis Interventions across Time and Space",
+      "authors": [
+        "Andrew Metrick",
+        "Paul Schmelzing"
+      ],
+      "year": "2026",
+      "abstract": "Abstract We present a new database of banking-crisis interventions, covering 1,946 interventions in 20 categories across 143 countries. We demonstrate that crisis-intervention patterns are significantly related to income and fiscal variables and to measures of the political system and currency regime. GDP losses following crises are economically significant and are larger for wealthier countries, with some evidence that these losses are mitigated by democratic political systems and liberal currency regimes. Finally, intervention frequencies reached an apex during the post–Bretton Woods era, continuing a secular increase since at least the late seventeenth century.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "4",
+      "page": "1054-1076",
+      "cited_by": 0,
+      "article_type": "journal-article"
+    },
+    {
+      "journal": "The Review of Financial Studies",
+      "fetched_at": "2026-04-15T09:01:14.316334",
+      "source": "CrossRef API",
+      "doi": "10.1093/rfs/hhaf058",
+      "url": "https://doi.org/10.1093/rfs/hhaf058",
+      "title": "How Likely Is an Inflation Disaster?",
+      "authors": [
+        "Jens Hilscher",
+        "Alon Raviv",
+        "Ricardo Reis"
+      ],
+      "year": "2026",
+      "abstract": "Abstract Long-dated inflation swap contracts provide widely used estimates of expected inflation. We develop methods to estimate complementary tail probabilities for persistently very high or low inflation using inflation options prices. We show that three new adjustments to conventional methods are crucial: inflation, horizon, and risk. We find that: (a) U.S. deflation risk in 2011–2014 has been overstated, (b) ECB unconventional policies lowered deflation disaster probabilities, (c) inflation expectations deanchored in 2021–2022, (d) reanchored as policy tightened, (e) but the 2021–2024 disaster left scars, and (f) U.S. expectations are less sensitive to inflation realizations than in the eurozone.",
+      "keywords": [],
+      "is_oa": true,
+      "issn": [
+        "0893-9454",
+        "1465-7368"
+      ],
+      "volume": "39",
+      "issue": "3",
+      "page": "744-782",
+      "cited_by": 0,
+      "article_type": "journal-article"
+    }
+  ]
+}
