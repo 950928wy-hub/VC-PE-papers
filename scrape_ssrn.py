@@ -59,10 +59,10 @@ SSRN_VC_PE_KEYWORDS = {
         "LP", "GP", "基金管理人", "募资",
     ],
     "exit strategy": [
-        "ipo", "initial public offering", "exit strategy", "exit",
-        "acquisition", "merger", "trade sale", "secondary sale",
-        "ipo pricing", "ipo underpricing", "listing",
-        "上市", "退出", "并购", "首次公开募股",
+        # 只保留金融/投资相关的退出术语
+        "initial public offering", "ipo", "acquisition exit",
+        "trade sale", "secondary sale", "ipo pricing", "ipo underpricing",
+        "listing", "going public", "上市", "退出机制", "并购退出",
     ],
     "corporate venture": [
         "corporate venture capital", "cvc", "corporate vc",
@@ -169,18 +169,34 @@ def is_vc_pe_related(title, abstract, keywords):
     判断 SSRN 论文是否与 VC/PE 主题相关
     返回: (是否相关, 匹配的主题标签列表)
     """
-    text = f"{title} {abstract} {' '.join(keywords) if keywords else ''}".lower()
+    text_lower = f"{title} {abstract} {' '.join(keywords) if keywords else ''}".lower()
 
-    # 首先检查是否应该排除
+    # 首先检查是否应该排除（非金融/经济领域）
     for excl in EXCLUDE_KEYWORDS:
-        if excl in text:
+        if excl in text_lower:
             return False, []
 
+    # 排除单独的 "exit" 出现在非金融上下文（很多论文是关于出口、退出策略游戏等的）
+    # 但保留 IPO exit, acquisition exit, exit mechanism 等金融相关用法
+    import re
+    # 检查是否有明显的非VC/PE领域论文
+    non_vcpe_patterns = [
+        r'\bexit\s+(sign|poll|vote|strategy\s+game|door|window|plan|visa|work)\b',
+        r'\binitial\s+public\s+offering\b(?!.*\b(venture|private\s+equity|angel|fund)\b)',
+    ]
+    
+    # 更精确的匹配：检查上下文
+    # 使用词边界来避免部分匹配
+    def match_whole_word(text, word):
+        """匹配完整的词/短语（考虑大小写）"""
+        pattern = r'\b' + re.escape(word) + r'\b'
+        return bool(re.search(pattern, text, re.IGNORECASE))
+    
     # 检查是否匹配 VC/PE 关键词
     matched_tags = []
     for category, kws in SSRN_VC_PE_KEYWORDS.items():
         for kw in kws:
-            if kw.lower() in text:
+            if match_whole_word(text_lower, kw):
                 if category not in matched_tags:
                     matched_tags.append(category)
                 break  # 一个类别只需匹配一次
@@ -196,23 +212,31 @@ def fetch_ssrn_by_crossref(days_back=365, max_papers=500):
     """
     all_papers = []
 
-    publishers = [
-        {"name": "Elsevier", "query": "SSRN"},
-    ]
-
     # 计算日期范围
     end_date = datetime.now()
     start_date = end_date - timedelta(days=days_back)
 
-    for pub in publishers:
-        print(f"\n📡 获取 {pub['name']} 工作论文 (回溯 {days_back} 天)...")
+    # VC/PE 相关搜索关键词（中文+英文）
+    search_queries = [
+        "venture capital",
+        "private equity",
+        "entrepreneurship",
+        "startup funding",
+        "angel investor",
+        "corporate venture capital",
+        "IPO exit",
+        "buyout LBO",
+    ]
+
+    for query in search_queries:
+        print(f"\n📡 搜索: '{query}' (回溯 {days_back} 天)...")
 
         url = "https://api.crossref.org/works"
         params = {
-            "query": "venture capital OR private equity OR entrepreneurship",
-            "filter": f"publisher-name:{pub['name']},from-pub-date:{start_date.strftime('%Y-%m-%d')}",
+            "query": query,
+            "filter": f"from-pub-date:{start_date.strftime('%Y-%m-%d')}",
             "rows": 100,
-            "sort": "published-date",
+            "sort": "issued",
             "order": "desc",
             "mailto": "yanyan@example.com",
         }
@@ -241,31 +265,46 @@ def fetch_nber_papers(days_back=365, max_papers=300):
     """
     all_papers = []
 
-    # NBER 是经济研究的重要来源
-    print(f"\n📡 获取 NBER 工作论文 (回溯 {days_back} 天)...")
+    # 计算日期范围
+    end_date = datetime.now()
+    start_date = end_date - timedelta(days=days_back)
 
-    url = "https://api.crossref.org/works"
-    params = {
-        "query": "venture capital OR private equity OR entrepreneurship OR startup",
-        "filter": f"publisher-name:NBER,from-pub-date:{(datetime.now() - timedelta(days=days_back)).strftime('%Y-%m-%d')}",
-        "rows": 100,
-        "sort": "published-date",
-        "order": "desc",
-        "mailto": "yanyan@example.com",
-    }
+    # NBER 的 DOI prefix
+    nber_queries = [
+        "venture capital",
+        "private equity", 
+        "entrepreneurship startup",
+    ]
 
-    try:
-        resp = _session.get(url, params=params, headers=HEADERS, timeout=20)
+    for query in nber_queries:
+        print(f"\n📡 搜索 NBER: '{query}'...")
 
-        if resp.status_code == 200:
-            data = resp.json()
-            items = data.get("message", {}).get("items", [])
-            print(f"    获取到 {len(items)} 篇")
-            all_papers.extend(items)
-        else:
-            print(f"    HTTP {resp.status_code}")
-    except Exception as e:
-        print(f"    ❌ 错误: {e}")
+        url = "https://api.crossref.org/works"
+        params = {
+            "query": query,
+            "filter": f"from-pub-date:{start_date.strftime('%Y-%m-%d')}",
+            "rows": 100,
+            "sort": "issued",
+            "order": "desc",
+            "mailto": "yanyan@example.com",
+        }
+
+        try:
+            resp = _session.get(url, params=params, headers=HEADERS, timeout=20)
+
+            if resp.status_code == 200:
+                data = resp.json()
+                items = data.get("message", {}).get("items", [])
+                # 过滤出 NBER 相关的
+                nber_items = [i for i in items if "10.13026" in i.get("DOI", "")]
+                print(f"    获取到 {len(items)} 篇，其中 NBER: {len(nber_items)} 篇")
+                all_papers.extend(nber_items)
+            else:
+                print(f"    HTTP {resp.status_code}")
+        except Exception as e:
+            print(f"    ❌ 错误: {e}")
+
+        random_delay()
 
     return all_papers
 
